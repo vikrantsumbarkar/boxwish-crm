@@ -82,14 +82,4 @@ textarea{
     cursor:pointer;
 }
 
-@media(max-width:768px){
 
-.grid-2{
-    grid-template-columns:1fr;
-}
-
-.grid-3{
-    grid-template-columns:1fr;
-}
-
-}
