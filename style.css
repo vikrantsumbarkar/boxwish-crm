@@ -33,8 +33,10 @@ h1{
 
 .grid-2{
     display:grid;
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:repeat(2,1fr);
     gap:15px;
+    align-items:center;
+}
 }
 
 .grid-3{
