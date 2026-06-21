@@ -11,22 +11,33 @@ const API_URL = "https://script.google.com/macros/s/AKfycbyg--nc4QfbmV4hxUFVYFSo
 async function saveEnquiry() {
 
     const data = {
-        enquiryId: "ENQ" + Date.now(),
-        clientId: "CL" + Date.now(),
-        companyName: document.getElementById("companyName")?.value || "",
-        leadSource: document.getElementById("leadSource")?.value || "",
-        priority: document.getElementById("priority")?.value || "",
-        productCategory: document.getElementById("productCategory")?.value || "",
-        productDetails: document.getElementById("productDetails")?.value || "",
-        quantity: document.getElementById("quantity")?.value || "",
-        budgetPerPiece: document.getElementById("budgetPerPiece")?.value || "",
-        expectedOrderValue: document.getElementById("expectedOrderValue")?.value || "",
-        expectedDeliveryDate: document.getElementById("expectedDeliveryDate")?.value || "",
-        brandingRequired: "",
-        brandingReferenceImages: "",
-        productReferenceImages: "",
-        discussionNotes: document.getElementById("discussionNotes")?.value || ""
-    };
+enquiryId: "ENQ" + Date.now(),
+clientId: "CL" + Date.now(),
+
+clientName: document.getElementById("clientName")?.value || "",
+contactPerson: document.getElementById("contactPerson")?.value || "",
+mobileNumber: document.getElementById("mobileNumber")?.value || "",
+designation: document.getElementById("designation")?.value || "",
+emailId: document.getElementById("emailId")?.value || "",
+department: document.getElementById("department")?.value || "",
+city: document.getElementById("city")?.value || "",
+
+companyName: document.getElementById("companyName")?.value || "",
+leadSource: document.getElementById("leadSource")?.value || "",
+priority: document.getElementById("priority")?.value || "",
+productCategory: document.getElementById("productCategory")?.value || "",
+productDetails: document.getElementById("productDetails")?.value || "",
+quantity: document.getElementById("quantity")?.value || "",
+budgetPerPiece: document.getElementById("budgetPerPiece")?.value || "",
+expectedOrderValue: document.getElementById("expectedOrderValue")?.value || "",
+expectedDeliveryDate: document.getElementById("expectedDeliveryDate")?.value || "",
+brandingRequired: "",
+brandingReferenceImages: "",
+productReferenceImages: "",
+discussionNotes: document.getElementById("discussionNotes")?.value || ""
+
+};
+
 
     try {
 
@@ -131,6 +142,7 @@ async function saveEnquiry() {
 
 <textarea id="discussionNotes" placeholder="Discussion Notes"></textarea>
 
+    </div>
     </div>
 
     <!-- ACTION BUTTONS -->
