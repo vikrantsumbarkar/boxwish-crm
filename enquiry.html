@@ -1,156 +1,153 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Boxwish CRM - Enquiries</title>
+    <title>Boxwish CRM - New Enquiry</title>
     <link rel="stylesheet" href="style.css">
-
-    <style>
-
-        table{
-            width:100%;
-            border-collapse:collapse;
-            background:white;
-        }
-
-        th,td{
-            border:1px solid #ddd;
-            padding:10px;
-            text-align:left;
-        }
-
-        th{
-            background:#00032e;
-            color:white;
-        }
-
-        .top-bar{
-            display:flex;
-            justify-content:space-between;
-            margin-bottom:20px;
-        }
-
-        input{
-            padding:10px;
-            width:300px;
-        }
-
-    </style>
-
 </head>
+<script>
 
+const API_URL = "https://script.google.com/macros/s/AKfycbyg--nc4QfbmV4hxUFVYFSouLoqR9dfuaxiWWBGDpdQKbs0yhNWQN63gJHX2a4MDVQcSQ/exec";
+
+async function saveEnquiry() {
+
+    const data = {
+        enquiryId: "ENQ" + Date.now(),
+        clientId: "CL" + Date.now(),
+        companyName: document.getElementById("companyName")?.value || "",
+        leadSource: document.getElementById("leadSource")?.value || "",
+        priority: document.getElementById("priority")?.value || "",
+        productCategory: document.getElementById("productCategory")?.value || "",
+        productDetails: document.getElementById("productDetails")?.value || "",
+        quantity: document.getElementById("quantity")?.value || "",
+        budgetPerPiece: document.getElementById("budgetPerPiece")?.value || "",
+        expectedOrderValue: document.getElementById("expectedOrderValue")?.value || "",
+        expectedDeliveryDate: document.getElementById("expectedDeliveryDate")?.value || "",
+        brandingRequired: "",
+        brandingReferenceImages: "",
+        productReferenceImages: "",
+        discussionNotes: document.getElementById("discussionNotes")?.value || ""
+    };
+
+    try {
+
+    console.log(data);
+
+    const response = await fetch(API_URL,{
+        method:"POST",
+        body:JSON.stringify(data)
+    });
+
+    alert("API Called Successfully");
+
+    console.log(await response.text());
+
+    } catch(error){
+
+        alert("Error Saving Enquiry");
+        console.log(error);
+
+    }
+}
+
+</script>
 <body>
 
 <div class="container">
 
-    <h1>ENQUIRIES</h1>
+    <h1>NEW ENQUIRY</h1>
 
-    <div class="top-bar">
+    <!-- CLIENT INFORMATION -->
 
-        <input
-            type="text"
-            id="searchBox"
-            placeholder="Search Company"
-            onkeyup="filterTable()">
+    <div class="card">
 
-        <a href="enquiry.html">
-            <button class="save-btn">
-                + New Enquiry
-            </button>
-        </a>
+        <h2>CLIENT INFORMATION</h2>
+
+        <div class="grid-2">
+
+            <input type="text" placeholder="Client Name">
+            <input type="text" id="companyName" placeholder="Company Name">
+
+            <input type="text" placeholder="Contact Person">
+            <input type="text" placeholder="Mobile Number">
+
+            <input type="text" placeholder="Designation">
+            <input type="email" placeholder="Email ID">
+
+            <input type="text" placeholder="Department">
+            <input type="text" placeholder="City">
+
+        </div>
 
     </div>
 
-    <table id="enquiryTable">
+    <!-- LEAD SOURCE -->
 
-        <thead>
+    <div class="card">
 
-            <tr>
-                <th>Enquiry ID</th>
-                <th>Company</th>
-                <th>Source</th>
-                <th>Product</th>
-                <th>Qty</th>
-                <th>Budget</th>
-                <th>Status</th>
-            </tr>
+        <h2>LEAD SOURCE</h2>
 
-        </thead>
+        <div class="grid-3">
 
-        <tbody id="tableBody">
+            <select id="leadSource">
+                <option>Select Source</option>
+                <option>WhatsApp</option>
+                <option>Google</option>
+                <option>Reference</option>
+                <option>LinkedIn</option>
+                <option>Website</option>
+                <option>IndiaMart</option>
+                <option>Walk In</option>
+            </select>
 
-        </tbody>
+            <input type="date">
 
-    </table>
+            <select id="priority">
+                <option>Priority</option>
+                <option>High</option>
+                <option>Medium</option>
+                <option>Low</option>
+            </select>
+
+        </div>
+
+    </div>
+
+    <!-- INITIAL REQUIREMENT -->
+
+    <div class="card">
+
+        <h2>INITIAL REQUIREMENT</h2>
+
+        <div class="grid-2">
+
+            <input type="text" id="productCategory" placeholder="Product Category">
+<input type="text" id="productDetails" placeholder="Product Details">
+
+<input type="number" id="quantity" placeholder="Approx Quantity">
+<input type="text" id="budgetPerPiece" placeholder="Budget Per Piece">
+
+<input type="date" id="expectedDeliveryDate">
+<input type="text" id="expectedOrderValue" placeholder="Expected Order Value">
+
+<textarea id="discussionNotes" placeholder="Discussion Notes"></textarea>
+
+    </div>
+
+    <!-- ACTION BUTTONS -->
+
+    <div class="button-area">
+
+        <button class="save-btn" onclick="saveEnquiry()">
+    Save Enquiry
+</button>
+
+        <button class="clear-btn" type="reset">
+            Clear
+        </button>
+
+    </div>
 
 </div>
-
-<script>
-
-const API_URL =
-"https://script.google.com/macros/s/AKfycbyg--nc4QfbmV4hxUFVYFSouLoqR9dfuaxiWWBGDpdQKbs0yhNWQN63gJHX2a4MDVQcSQ/exec?action=getEnquiries";
-
-async function loadEnquiries(){
-
-    try{
-
-        const response = await fetch(API_URL);
-        const data = await response.json();
-
-        let html = "";
-
-        for(let i=1;i<data.length;i++){
-
-            html += `
-            <tr>
-                <td>${data[i][0]}</td>
-                <td>${data[i][2]}</td>
-                <td>${data[i][3]}</td>
-                <td>${data[i][5]}</td>
-                <td>${data[i][7]}</td>
-                <td>${data[i][8]}</td>
-                <td>${data[i][16]}</td>
-            </tr>
-            `;
-        }
-
-        document.getElementById("tableBody").innerHTML = html;
-
-    }catch(error){
-
-        console.log(error);
-        alert("Unable to load enquiries");
-
-    }
-
-}
-
-function filterTable(){
-
-    let filter =
-    document.getElementById("searchBox")
-    .value
-    .toUpperCase();
-
-    let tr =
-    document.querySelectorAll("#tableBody tr");
-
-    tr.forEach(row => {
-
-        let txt =
-        row.textContent || row.innerText;
-
-        row.style.display =
-        txt.toUpperCase().includes(filter)
-        ? ""
-        : "none";
-
-    });
-
-}
-
-loadEnquiries();
-
-</script>
 
 </body>
 </html>
