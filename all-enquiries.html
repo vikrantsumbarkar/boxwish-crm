@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Boxwish CRM - All Enquiries</title>
+    <link rel="stylesheet" href="style.css">
+
+```
+<style>
+    table{
+        width:100%;
+        border-collapse:collapse;
+        background:white;
+    }
+
+    th,td{
+        border:1px solid #ddd;
+        padding:10px;
+        text-align:left;
+    }
+
+    th{
+        background:#00032e;
+        color:white;
+    }
+
+    .top-bar{
+        display:flex;
+        justify-content:space-between;
+        margin-bottom:20px;
+    }
+
+    #searchBox{
+        width:300px;
+        padding:10px;
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+<div class="container">
+
+```
+<h1>ALL ENQUIRIES</h1>
+
+<div class="top-bar">
+
+    <input
+        type="text"
+        id="searchBox"
+        placeholder="Search Company"
+        onkeyup="filterTable()">
+
+    <a href="new-enquiry.html">
+        <button class="save-btn">
+            + New Enquiry
+        </button>
+    </a>
+
+</div>
+
+<table>
+
+    <thead>
+
+    <tr>
+        <th>Enquiry ID</th>
+        <th>Company</th>
+        <th>Lead Source</th>
+        <th>Product</th>
+        <th>Qty</th>
+        <th>Budget</th>
+        <th>Status</th>
+    </tr>
+
+    </thead>
+
+    <tbody id="tableBody">
+
+    </tbody>
+
+</table>
+```
+
+</div>
+
+<script>
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycbyg--nc4QfbmV4hxUFVYFSouLoqR9dfuaxiWWBGDpdQKbs0yhNWQN63gJHX2a4MDVQcSQ/exec?action=getEnquiries";
+
+async function loadEnquiries(){
+
+    try{
+
+        const response = await fetch(API_URL);
+        const data = await response.json();
+
+        let html = "";
+
+        for(let i=1;i<data.length;i++){
+
+            html += `
+            <tr>
+                <td>${data[i][0]}</td>
+                <td>${data[i][2]}</td>
+                <td>${data[i][3]}</td>
+                <td>${data[i][5]}</td>
+                <td>${data[i][7]}</td>
+                <td>${data[i][8]}</td>
+                <td>${data[i][16]}</td>
+            </tr>
+            `;
+        }
+
+        document.getElementById("tableBody").innerHTML = html;
+
+    }catch(error){
+
+        console.log(error);
+        alert("Unable to load enquiries");
+
+    }
+
+}
+
+function filterTable(){
+
+    let filter =
+    document.getElementById("searchBox")
+    .value
+    .toUpperCase();
+
+    let rows =
+    document.querySelectorAll("#tableBody tr");
+
+    rows.forEach(row => {
+
+        let txt =
+        row.textContent || row.innerText;
+
+        row.style.display =
+        txt.toUpperCase().includes(filter)
+        ? ""
+        : "none";
+
+    });
+
+}
+
+loadEnquiries();
+
+</script>
+
+</body>
+</html>
