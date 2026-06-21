@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Enquiry Details</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+```
+<h1>ENQUIRY DETAILS</h1>
+
+<div class="card">
+
+    <h2>Client Information</h2>
+
+    <p><b>Enquiry ID:</b> <span id="enquiryId"></span></p>
+    <p><b>Client Name:</b> <span id="clientName"></span></p>
+    <p><b>Contact Person:</b> <span id="contactPerson"></span></p>
+    <p><b>Mobile:</b> <span id="mobileNumber"></span></p>
+    <p><b>Email:</b> <span id="emailId"></span></p>
+    <p><b>Company:</b> <span id="companyName"></span></p>
+
+</div>
+
+<div class="card">
+
+    <h2>Requirement Details</h2>
+
+    <p><b>Category:</b> <span id="productCategory"></span></p>
+    <p><b>Product:</b> <span id="productDetails"></span></p>
+    <p><b>Quantity:</b> <span id="quantity"></span></p>
+    <p><b>Budget:</b> <span id="budgetPerPiece"></span></p>
+    <p><b>Expected Order Value:</b> <span id="expectedOrderValue"></span></p>
+    <p><b>Delivery Date:</b> <span id="expectedDeliveryDate"></span></p>
+
+</div>
+
+<div class="card">
+
+    <h2>Discussion Notes</h2>
+
+    <p id="discussionNotes"></p>
+
+</div>
+
+<div class="card">
+
+    <h2>Status</h2>
+
+    <p><b>Status:</b> <span id="status"></span></p>
+
+</div>
+```
+
+</div>
+
+<script>
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycbyg--nc4QfbmV4hxUFVYFSouLoqR9dfuaxiWWBGDpdQKbs0yhNWQN63gJHX2a4MDVQcSQ/exec";
+
+const params =
+new URLSearchParams(window.location.search);
+
+const enquiryId =
+params.get("id");
+
+async function loadEnquiry() {
+
+    try {
+
+        const response = await fetch(
+            API_URL +
+            "?action=getEnquiry&id=" +
+            enquiryId
+        );
+
+        const data = await response.json();
+
+        document.getElementById("enquiryId").innerText = data[0];
+        document.getElementById("clientName").innerText = data[2];
+        document.getElementById("contactPerson").innerText = data[3];
+        document.getElementById("mobileNumber").innerText = data[4];
+        document.getElementById("emailId").innerText = data[6];
+        document.getElementById("companyName").innerText = data[9];
+
+        document.getElementById("productCategory").innerText = data[12];
+        document.getElementById("productDetails").innerText = data[13];
+        document.getElementById("quantity").innerText = data[14];
+        document.getElementById("budgetPerPiece").innerText = data[15];
+        document.getElementById("expectedOrderValue").innerText = data[16];
+        document.getElementById("expectedDeliveryDate").innerText = data[17];
+
+        document.getElementById("discussionNotes").innerText = data[21];
+
+        document.getElementById("status").innerText = data[23];
+
+    } catch(err){
+
+        console.log(err);
+        alert("Unable to load enquiry");
+
+    }
+
+}
+
+loadEnquiry();
+
+</script>
+
+</body>
+</html>
